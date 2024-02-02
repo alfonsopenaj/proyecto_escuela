@@ -1,0 +1,18 @@
+on:
+  push:
+jobs:
+  integracion_continua_Equipo_4:
+    runs-on: ubuntu-latest
+    steps:
+      - name: obtener los últimos cambios del respositorio
+        uses: actions/checkout@v4
+      - name: installation Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Configuración de Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Compilar el proyecto
+        run: gradle build

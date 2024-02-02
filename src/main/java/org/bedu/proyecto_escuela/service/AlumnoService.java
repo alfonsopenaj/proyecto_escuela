@@ -57,11 +57,14 @@ public class AlumnoService {
 
     public void delete(Long id) throws AlumnoNotFoundException{
         Optional<Alumno> alumnoExistente = repository.findById(id);
+
         if (alumnoExistente.isPresent()) {
             repository.deleteById(id);
         }
         else {
             throw new AlumnoNotFoundException(id);
         }
+
+        //repository.deleteById(id);
     }
 }

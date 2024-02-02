@@ -1,6 +1,5 @@
 package org.bedu.proyecto_escuela.controller;
 
-import jakarta.validation.Valid;
 import org.bedu.proyecto_escuela.dto.*;
 import org.bedu.proyecto_escuela.exception.AlumnoNotFoundException;
 import org.bedu.proyecto_escuela.service.AlumnoMateriaService;
@@ -12,8 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.LinkedList;
 import java.util.List;

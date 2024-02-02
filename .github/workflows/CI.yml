@@ -1,7 +1,7 @@
 on:
   push:
 jobs:
-  integracion_continua_Equipo_4:
+  integracion_continua_Equipo_3:
     runs-on: ubuntu-latest
     steps:
       - name: obtener los últimos cambios del respositorio
@@ -13,6 +13,5 @@ jobs:
           java-version: 17
       - name: Configuración de Gradle
         uses: gradle/gradle-build-action@v2
-
       - name: Compilar el proyecto
         run: gradle build

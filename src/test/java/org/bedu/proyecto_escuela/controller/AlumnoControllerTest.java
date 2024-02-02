@@ -20,9 +20,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
-
-//Esta es una prueba de commint
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
@@ -81,12 +81,12 @@ class AlumnoControllerTest {
         AlumnoDTO saved = new AlumnoDTO();
 
         saved.setId_alumno(100);
-        saved.setMatricula(100);
-        saved.setNombre_alumno("Francisco");
-        saved.setSexo("M");
-        saved.setTelefono("4444333231");
-        saved.setDireccion("Robles 333");
-        saved.setEmail("fracisco1@gmail.com");
+        saved.setMatricula(dto.getMatricula());
+        saved.setNombre_alumno(dto.getNombre_alumno());
+        saved.setSexo(dto.getSexo());
+        saved.setTelefono(dto.getTelefono());
+        saved.setDireccion(dto.getDireccion());
+        saved.setEmail(dto.getEmail());
 
         when(service.save(any(CreateAlumnoDTO.class))).thenReturn(saved);
 
@@ -106,7 +106,13 @@ class AlumnoControllerTest {
     @Test
     @DisplayName("El Controlador deberia asociar una materia a un alumno")
     public void addMateriaTest() {
-        //Pendiente por preguntar
+        AddMateriaDTO dto = new AddMateriaDTO();
+
+        dto.setId_materia(203L);
+
+        controller.addMateria(112L, dto);
+
+        verify(alumnoMateriaService, times(1)).addMateria(112L, dto.getId_materia());
     }
 
     @Test
@@ -126,6 +132,7 @@ class AlumnoControllerTest {
         List<MateriaDTO> result = controller.findMateriasByAlumno(1);
 
         //Assert
+        assertNotNull(result);
         assertEquals(DatosFalsos, result);
     }
 
@@ -144,12 +151,12 @@ class AlumnoControllerTest {
         AlumnoDTO saved = new AlumnoDTO();
 
         saved.setId_alumno(100);
-        saved.setMatricula(100);
-        saved.setNombre_alumno("Francisco");
-        saved.setSexo("M");
-        saved.setTelefono("4444333231");
-        saved.setDireccion("Robles 333");
-        saved.setEmail("fracisco1@gmail.com");
+        saved.setMatricula(dto.getMatricula());
+        saved.setNombre_alumno(dto.getNombre_alumno());
+        saved.setSexo(dto.getSexo());
+        saved.setTelefono(dto.getTelefono());
+        saved.setDireccion(dto.getDireccion());
+        saved.setEmail(dto.getEmail());
 
         when(service.update(1L, dto)).thenReturn(saved);
 
@@ -169,6 +176,8 @@ class AlumnoControllerTest {
     @Test
     @DisplayName("El Controlador deberia eliminar el alumno")
     public void deleteTest() throws AlumnoNotFoundException {
-        // Pendiente por preguntar
+        controller.delete(111L);
+
+        verify(service, times(1)).delete(111L);
     }
 }

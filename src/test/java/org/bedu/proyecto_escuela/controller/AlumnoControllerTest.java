@@ -59,6 +59,8 @@ class AlumnoControllerTest {
         List<AlumnoDTO> result = controller.findAll();
 
         //Assert
+        assertNotNull(result);
+        assertTrue(result.size() > 0);
         assertEquals(DatosFalsos, result);
     }
 
@@ -130,6 +132,7 @@ class AlumnoControllerTest {
 
         //Assert
         assertNotNull(result);
+        assertTrue(result.size() > 0);
         assertEquals(DatosFalsos, result);
     }
 

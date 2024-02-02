@@ -1,7 +1,6 @@
 package org.bedu.proyecto_escuela.controller;
 
-import org.bedu.proyecto_escuela.dto.MateriaDTO;
-import org.bedu.proyecto_escuela.dto.UpdateMateriaDTO;
+import org.bedu.proyecto_escuela.dto.*;
 import org.bedu.proyecto_escuela.exception.MaestroNotFoundException;
 import org.bedu.proyecto_escuela.exception.MateriaNotFoundException;
 import org.bedu.proyecto_escuela.service.MateriaService;
@@ -17,7 +16,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @SpringBootTest
@@ -52,7 +52,35 @@ class MateriaControllerTest {
         List<MateriaDTO> result = controller.findAll();
 
         //Assert
+        assertNotNull(result);
+        assertTrue(result.size() > 0);
         assertEquals(DatosFalsos, result);
+    }
+
+    @Test
+    @DisplayName("El Controlador deberia guardar una materia")
+    public void saveTest() throws MaestroNotFoundException{
+        // Arrange
+        CreateMateriaDTO dto = new CreateMateriaDTO();
+
+        dto.setMateria("Quimica");
+        dto.setId_maestro(222);
+
+        MateriaDTO saved = new MateriaDTO();
+
+        saved.setId_materia(333);
+        saved.setMateria(dto.getMateria());
+        saved.setId_maestro(dto.getId_maestro());
+
+        when(service.save(any(CreateMateriaDTO.class))).thenReturn(saved);
+
+        // Act
+        MateriaDTO result = controller.save(dto);
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(dto.getMateria(), result.getMateria());
+        assertEquals(dto.getId_maestro(), result.getId_maestro());
     }
 
     @Test
@@ -66,8 +94,8 @@ class MateriaControllerTest {
         MateriaDTO saved = new MateriaDTO();
 
         saved.setId_materia(110);
-        saved.setMateria("Quimica");
-        saved.setId_maestro(8);
+        saved.setMateria(dto.getMateria());
+        saved.setId_maestro(dto.getId_maestro());
 
         when(service.update(110L, dto)).thenReturn(saved);
 
@@ -83,6 +111,8 @@ class MateriaControllerTest {
     @Test
     @DisplayName("El Controlador deberia eliminar la materia")
     public void deleteTest() throws MateriaNotFoundException {
-        // Pendiente por preguntar
+        controller.delete(111L);
+
+        verify(service, times(1)).delete(111L);
     }
 }

@@ -45,7 +45,7 @@ class AlumnoServiceTest {
     }
 
     @Test
-    @DisplayName("El servicios debería regresar los alumnos del reposotorio")
+    @DisplayName("El servicio debería regresar los alumnos del reposotorio")
     void findAllTest() {
         List<Alumno> data = new LinkedList<>();
 
@@ -124,7 +124,7 @@ class AlumnoServiceTest {
     }
 
     @Test
-    @DisplayName("El servicios debería actualizar un alumno en el repositorio")
+    @DisplayName("El servicio debería actualizar un alumno en el repositorio")
     void updateTest() throws AlumnoNotFoundException {
         UpdateAlumnoDTO dto = new UpdateAlumnoDTO();
 
@@ -156,6 +156,16 @@ class AlumnoServiceTest {
         assertEquals(dto.getDireccion(), alumno.getDireccion());
         assertEquals(dto.getEmail(), alumno.getEmail());
         verify(repository, times(1)).save(alumno);
+    }
+
+    @Test
+    @DisplayName("El servicio debería llamar un error si el alumno no fue encontrado")
+    void deleteWithErrorTest() {
+        Optional<Alumno> dummy = Optional.empty();
+
+        when(repository.findById(anyLong())).thenReturn(dummy);
+
+        assertThrows(AlumnoNotFoundException.class, () -> service.delete(345L));
     }
 
     @Test

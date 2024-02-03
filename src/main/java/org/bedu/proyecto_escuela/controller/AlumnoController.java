@@ -25,6 +25,7 @@ public class AlumnoController {
     @Operation(summary = "Obtiene la lista de todos los alumnos")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
+
     public List<AlumnoDTO> findAll() {
         return service.findAll();
     }

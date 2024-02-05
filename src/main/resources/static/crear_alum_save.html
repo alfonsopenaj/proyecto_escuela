@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Proyecto Escuela</title>
+</head>
+<body>
+<form th:action="@{/alumno}" th:object="${mensajero}" method="post">
+    <div>
+        <label class="formulario" for="matricula">Matricula: </label>
+        <input type="text" th:field="*{matricula}"  id="matricula" name="matricula" required>
+    </div>
+
+    <div>
+        <label class="formulario" for="nombre_alumno">Nombre:</label>
+        <input type="text" th:field="*{nombre_alumno}" id="nombre_alumno" name="nombre_alumno" required>
+    </div>
+
+    <div>
+        <label class="formulario" for="sexo">Sexo:</label>
+        <input type="text" th:field="*{sexo}"  id="sexo" name="sexo" required>
+    </div>
+
+    <div>
+        <label class="formulario" for="telefono">Teléfono:</label>
+        <input type="text" th:field="*{telefono}"  id="telefono" name="telefono" required>
+    </div>
+
+    <div>
+        <label class="formulario" for="direccion">Dirección:</label>
+        <input type="text" th:field="*{direccion}"  id="direccion" name="direccion" required>
+    </div>
+
+    <div>
+        <label class="formulario" for="email">Correo Electrónico:</label>
+        <input type="email" th:field="*{email}"  id="email" name="email" required>
+    </div>
+
+    <button type="submit">Guardar</button>
+
+
+</form>
+
+</body>
+</html>

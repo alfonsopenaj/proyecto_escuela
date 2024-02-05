@@ -30,10 +30,12 @@ public class AlumnoController {
         return service.findAll();
     }
 
+    //
+
     @Operation(summary = "Crea un nuevo alumno")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AlumnoDTO save(@Valid @RequestBody CreateAlumnoDTO data) {
+    public AlumnoDTO save(@Valid @ModelAttribute("mensajero") CreateAlumnoDTO data) {
         return service.save(data);
     }
 

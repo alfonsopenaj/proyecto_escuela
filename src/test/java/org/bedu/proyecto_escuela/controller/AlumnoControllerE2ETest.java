@@ -3,8 +3,15 @@ package org.bedu.proyecto_escuela.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.bedu.proyecto_escuela.dto.AlumnoDTO;
+import org.bedu.proyecto_escuela.dto.MateriaDTO;
 import org.bedu.proyecto_escuela.model.Alumno;
+import org.bedu.proyecto_escuela.model.AlumnoMateria;
+import org.bedu.proyecto_escuela.model.Maestro;
+import org.bedu.proyecto_escuela.model.Materia;
+import org.bedu.proyecto_escuela.repository.AlumnoMateriaRepository;
 import org.bedu.proyecto_escuela.repository.AlumnoRepository;
+import org.bedu.proyecto_escuela.repository.MaestroRepository;
+import org.bedu.proyecto_escuela.repository.MateriaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,6 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 //Anotación para configurar la BD para las pruebas
@@ -184,6 +193,56 @@ class AlumnoControllerE2ETest {
         String content = result.getResponse().getContentAsString();
 
         String expectedResponse = "{\"code\":\"ERR_VALID\",\"message\":\"Hubo un error al procesar los datos de entrada\",\"details\":[\"must not be blank\"]}";
+
+        assertEquals(expectedResponse, content);
+    }
+
+    @Test
+    @DisplayName("PUT /alumno/{id} deberia actualizar la información de un alumno")
+    void updateTest() throws Exception {
+        Alumno alumno = new Alumno();
+
+        alumno.setMatricula(111);
+        alumno.setNombre_alumno("Roberto");
+        alumno.setSexo("M");
+        alumno.setTelefono("9616179700");
+        alumno.setDireccion("Fidel Velazquez");
+        alumno.setEmail("roberto@gmail.com");
+
+        repository.save(alumno);
+
+        MvcResult result = mockMvc.perform(put("/alumno/" + alumno.getId_alumno()).contentType("application/json").content("{\"matricula\":\"456\",\"nombre_alumno\":\"Carlos\",\"sexo\":\"H\",\"telefono\":\"9988776655\",\"direccion\":\"Conocido\",\"email\":\"carlos@gmail.com\"}"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        String expectedResponse = "{\"id_alumno\":" + alumno.getId_alumno() + ",\"matricula\":456,\"nombre_alumno\":\"Carlos\",\"sexo\":\"H\",\"telefono\":\"9988776655\",\"direccion\":\"Conocido\",\"email\":\"carlos@gmail.com\"}";
+
+        assertEquals(expectedResponse, content);
+    }
+
+    @Test
+    @DisplayName("DELETE /alumno/{id} deberia eliminar un alumno")
+    void deleteTest() throws Exception {
+        Alumno alumno = new Alumno();
+
+        alumno.setMatricula(111);
+        alumno.setNombre_alumno("Roberto");
+        alumno.setSexo("M");
+        alumno.setTelefono("9616179700");
+        alumno.setDireccion("Fidel Velazquez");
+        alumno.setEmail("roberto@gmail.com");
+
+        repository.save(alumno);
+
+        MvcResult result = mockMvc.perform(delete("/alumno/" + alumno.getId_alumno()).contentType("application/json").content(""))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        String expectedResponse = "";
 
         assertEquals(expectedResponse, content);
     }

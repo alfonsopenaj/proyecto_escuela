@@ -3,6 +3,15 @@ plugins {
 	id 'org.springframework.boot' version '3.2.0'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'jacoco'
+	id "org.sonarqube" version "3.5.0.2730"
+}
+
+sonar {
+		properties {
+			property "sonar.projectKey", "proyecto_escuela__"
+			property "sonar.host.url", "http://localhost:9000"
+			property "sonar.login", "sqp_5a53fb1cd8ae5f5c831a49e90b57362c80d8d70c"
+		}
 }
 
 group = 'org.bedu'

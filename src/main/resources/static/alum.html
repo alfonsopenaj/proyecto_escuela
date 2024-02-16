@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Proyecto Escuela</title>
 </head>
 <body>
     <div>
-        <a href="crear_alum_save.html"><button>Crear Alumno</button></a>
+
+        <button onclick="redirigir()" th:href="@{/alumno}">Ir a página dinámica</button>
+
+        <script>
+            function redirigir() {
+              window.location.href = "../templates/alumno/registro.html" ;
+            }
+        </script>
         <a th:href="{/ConsultarAlumno}"><button>Consultar Alumno</button></a>
         <a th:href="{/BorrarAlumno}"><button>Actualizar Alumno</button></a>
         <a th:href="{/BorrarAlumno}"><button>Borrar Alumno</button></a>
